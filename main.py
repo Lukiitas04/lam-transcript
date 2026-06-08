@@ -67,15 +67,17 @@ def obtener_transcripcion(video_id):
     with tempfile.TemporaryDirectory() as tmpdir:
         output_path = os.path.join(tmpdir, video_id)
         
-        cmd = [
-            sys.executable, '-m', 'yt_dlp',
-            '--write-auto-sub',
-            '--sub-lang', 'es',
-            '--skip-download',
-            '--output', output_path,
-            '--quiet',
-            f'https://www.youtube.com/watch?v={video_id}'
-        ]
+       cmd = [
+    sys.executable, '-m', 'yt_dlp',
+    '--write-auto-sub',
+    '--sub-lang', 'es',
+    '--skip-download',
+    '--output', output_path,
+    '--quiet',
+    '--extractor-args', 'youtube:player_client=web',
+    '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    f'https://www.youtube.com/watch?v={video_id}'
+]
         
         try:
             subprocess.run(cmd, capture_output=True, timeout=30)
